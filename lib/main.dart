@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
+import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/features/Home/home_screen.dart';
 import 'package:todo_app/features/splash_screen/splash_screen.dart';
 
@@ -17,10 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var configProvider = Provider.of<AppConfigProvider>(context);
     // TODO: implement build
-    return MaterialApp(debugShowCheckedModeBanner: false,initialRoute: SplashScreen.routeName, routes: {
+    return MaterialApp(debugShowCheckedModeBanner: false,initialRoute: HomeScreen.routeName, routes: {
       SplashScreen.routeName: (context) => SplashScreen(),
       HomeScreen.routeName: (context) => HomeScreen()
-    }, themeMode: configProvider.themeMode,);
+    }, themeMode: configProvider.themeMode,theme: MyTheme.lightMode,);
   }
 }
 
