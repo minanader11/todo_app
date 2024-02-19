@@ -81,7 +81,7 @@ class TaskListITem extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: MyTheme.primaryColor),
                 child: Icon(
                   Icons.check,
