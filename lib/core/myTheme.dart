@@ -11,6 +11,7 @@ class MyTheme {
   static const blackColor = Color(0xff141922);
   static const redColor = Color(0xffEC4B4B);
   static const backgroundColorDark = Color(0xff060E1E);
+  static const dateColor=Color(0xff707070);
   static ThemeData lightMode = ThemeData(
     appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,

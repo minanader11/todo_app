@@ -2,6 +2,7 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/core/myTheme.dart';
+import 'package:todo_app/core/show_modal_sheet.dart';
 import 'package:todo_app/features/Home/widgets/task_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,12 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalSheet(context);
+          },
           child: Icon(
             Icons.add,
             color: MyTheme.whiteColor,
           )),
-      bottomNavigationBar: BottomAppBar(color: MyTheme.whiteColor,
+      bottomNavigationBar: BottomAppBar(
+        color: MyTheme.whiteColor,
         shape: CircularNotchedRectangle(),
         notchMargin: 8,
         child: Wrap(children: [
@@ -70,9 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
               monthPickerType: MonthPickerType.switcher,
               dateFormatter: DateFormatter.fullDateDMY(),
             ),
-            dayProps: EasyDayProps(
-              disabledDayStyle: DayStyle(
-                  decoration: BoxDecoration(color: MyTheme.whiteColor)),
+            dayProps: EasyDayProps(todayStyle: DayStyle(
+                decoration: BoxDecoration(
+                    color: MyTheme.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8)))),
+              inactiveDayStyle: DayStyle(
+                  decoration: BoxDecoration(
+                      color: MyTheme.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)))),
               dayStructure: DayStructure.dayStrDayNum,
               activeDayStyle: DayStyle(
                 decoration: BoxDecoration(
@@ -97,5 +105,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
