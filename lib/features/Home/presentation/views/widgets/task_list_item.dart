@@ -7,6 +7,7 @@ import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskListITem extends StatelessWidget {
   TaskListITem({super.key,required this.task});
@@ -94,7 +95,7 @@ class TaskListITem extends StatelessWidget {
                 },
                 child: task.taskStatus ?Padding(
                   padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-                  child: Text('Done!',style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.greenColor),),
+                  child: Text(AppLocalizations.of(context)!.done,style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.greenColor),),
                 ): Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),

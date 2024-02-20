@@ -1,0 +1,10 @@
+{
+"app_title": "To Do List",
+ "language":"Language",
+ "theme" : "Theme",
+ "english" :"English",
+ "arabic" : "Arabic",
+ "light" : "Light",
+ "dark":"Dark",
+ "done":"Done"
+}
