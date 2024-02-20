@@ -2,11 +2,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/features/modal_sheet.dart';
+import 'package:todo_app/features/Home/presentation/views/modal_sheet.dart';
 
-void showModalSheet(BuildContext context) {
-  showModalBottomSheet(
-    useRootNavigator: true,
+Future<void> showModalSheet(BuildContext context) async{
+
+  await showModalBottomSheet(
+
     context: context,
     builder: (context) {
       return ModalSheet();

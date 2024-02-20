@@ -47,4 +47,39 @@ class MyTheme {
       ),
     ),
   );
+  static ThemeData darkTheme= ThemeData(
+    appBarTheme: AppBarTheme(
+      backgroundColor: primaryColor,
+      elevation: 0,
+    ),
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: whiteColor,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: whiteColor,
+      ),
+      bodySmall:TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: whiteColor,
+      ),
+    ),
+    scaffoldBackgroundColor: backgroundColorDark,
+    bottomNavigationBarTheme:
+    BottomNavigationBarThemeData(selectedItemColor: primaryColor,backgroundColor: Colors.transparent,elevation: 0,unselectedItemColor: whiteColor),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: primaryColor,
+      shape: StadiumBorder(
+        side: BorderSide(
+          color:blackColor,
+          width: 4,
+        ),
+      ),
+    ),
+  );
 }
