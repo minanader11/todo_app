@@ -23,7 +23,6 @@ class _ModalSheetState extends State<ModalSheet> {
   String taskDescription = '';
 
   @override
-  @override
   Widget build(BuildContext context) {
     var taskProvider = Provider.of<TaskProvider>(context);
     var configProvider = Provider.of<AppConfigProvider>(context);
@@ -35,27 +34,29 @@ class _ModalSheetState extends State<ModalSheet> {
             taskDate: selectedDate,
             taskName: taskName,
             taskDescription: taskDescription));
-        taskProvider.date=selectedDate;
-        taskProvider.notifyListeners();
+        taskProvider.date = selectedDate;
       }
     }
 
     return Container(
-      color: configProvider.themeMode==ThemeMode.light?MyTheme.whiteColor:MyTheme.blackColor,
-      padding: EdgeInsets.all(20),
+      color: configProvider.themeMode == ThemeMode.light
+          ? MyTheme.whiteColor
+          : MyTheme.blackColor,
+      padding: const EdgeInsets.all(20),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
-            Text('Add a New Task'),
+            const Text('Add a New Task'),
             TextFormField(
               onSaved: (newValue) => taskName = newValue!,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                   fontWeight: FontWeight.normal),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                hintText: 'Enter Your Task',
-                hintStyle: Theme.of(context).textTheme.bodyMedium
-              ),
+                  hintText: 'Enter Your Task',
+                  hintStyle: Theme.of(context).textTheme.bodyMedium),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'please enter your task ';
@@ -64,12 +65,13 @@ class _ModalSheetState extends State<ModalSheet> {
             ),
             TextFormField(
               onSaved: (newValue) => taskDescription = newValue!,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                   fontWeight: FontWeight.normal),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                hintText: 'Enter Your description',
-                  hintStyle: Theme.of(context).textTheme.bodyMedium
-              ),
+                  hintText: 'Enter Your description',
+                  hintStyle: Theme.of(context).textTheme.bodyMedium),
               maxLines: 4,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -77,25 +79,29 @@ class _ModalSheetState extends State<ModalSheet> {
                 }
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Align(
+           const  Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Select Time',
                 )),
             TextButton(
-                style: TextButton.styleFrom(primary:configProvider.themeMode==ThemeMode.light? MyTheme.dateColor:MyTheme.whiteColor),
-                onPressed: () async {
-                  selectedDate = await selectDate(context);
-                  setState(() {});
-                },
-                child: Text(
-                  format.format(selectedDate).toString(),
-                  style: TextStyle(fontSize: 18),
-                )),
-            SizedBox(
+              style: TextButton.styleFrom(
+                  primary: configProvider.themeMode == ThemeMode.light
+                      ? MyTheme.dateColor
+                      : MyTheme.whiteColor),
+              onPressed: () async {
+                selectedDate = await selectDate(context);
+                setState(() {});
+              },
+              child: Text(
+                format.format(selectedDate).toString(),
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            const SizedBox(
               height: 10,
             ),
             IconButton(
@@ -104,7 +110,7 @@ class _ModalSheetState extends State<ModalSheet> {
                 Navigator.of(context).pop();
                 //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen(),));
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.check,
                 color: MyTheme.whiteColor,
               ),

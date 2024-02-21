@@ -1,14 +1,10 @@
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_modal_sheet.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
-import 'package:todo_app/features/Home/presentation/views/modal_sheet.dart';
 import 'package:todo_app/features/Home/presentation/views/todo_tab.dart';
-import 'package:todo_app/features/Home/presentation/views/widgets/task_list_item.dart';
 import 'package:todo_app/features/settings/presentaion/views/settings_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -50,40 +46,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {});
               });
             },
-            child: Icon(
+            child: const Icon(
               Icons.add,
               color: MyTheme.whiteColor,
             )),
         bottomNavigationBar: BottomAppBar(
+          padding: EdgeInsets.zero,
           elevation: 0,
           color: configProvider.themeMode == ThemeMode.light
               ? MyTheme.whiteColor
               : MyTheme.blackColor,
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 8,
-          child: Wrap(children: [
-            BottomNavigationBar(
-                onTap: (value) {
-                  selectedItem = value;
-                  taskProvider.filteringTasks(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
-                  setState(() {});
-                },
-                currentIndex: selectedItem,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.list,
-                        size: 35,
-                      ),
-                      label: ''),
-                  BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.settings,
-                        size: 35,
-                      ),
-                      label: ''),
-                ]),
-          ]),
+          child: BottomNavigationBar(
+              onTap: (value) {
+                selectedItem = value;
+                taskProvider.filteringTasks(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
+                setState(() {});
+              },
+              currentIndex: selectedItem,
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.list,
+                      size: 35,
+                    ),
+                    label: ''),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.settings,
+                      size: 35,
+                    ),
+                    label: ''),
+              ]),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: tabs[selectedItem]);
