@@ -11,13 +11,13 @@ class MyTheme {
   static const blackColor = Color(0xff141922);
   static const redColor = Color(0xffEC4B4B);
   static const backgroundColorDark = Color(0xff060E1E);
-  static const dateColor=Color(0xff707070);
+  static const dateColor = Color(0xff707070);
   static ThemeData lightMode = ThemeData(
-    appBarTheme: AppBarTheme(
+    appBarTheme:const AppBarTheme(
       backgroundColor: primaryColor,
       elevation: 0,
     ),
-    textTheme: TextTheme(
+    textTheme:const TextTheme(
       bodyLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
@@ -28,16 +28,18 @@ class MyTheme {
         fontWeight: FontWeight.bold,
         color: blackColor,
       ),
-      bodySmall:TextStyle(
+      bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.normal,
         color: blackColor,
       ),
     ),
     scaffoldBackgroundColor: backgroundColorLight,
-    bottomNavigationBarTheme:
-        BottomNavigationBarThemeData(selectedItemColor: primaryColor,backgroundColor: Colors.transparent,elevation: 0),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        selectedItemColor: primaryColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
       shape: StadiumBorder(
         side: BorderSide(
@@ -47,12 +49,12 @@ class MyTheme {
       ),
     ),
   );
-  static ThemeData darkTheme= ThemeData(
-    appBarTheme: AppBarTheme(
+  static ThemeData darkTheme = ThemeData(
+    appBarTheme:const  AppBarTheme(
       backgroundColor: primaryColor,
       elevation: 0,
     ),
-    textTheme: TextTheme(
+    textTheme:const TextTheme(
       bodyLarge: TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.bold,
@@ -63,20 +65,23 @@ class MyTheme {
         fontWeight: FontWeight.bold,
         color: whiteColor,
       ),
-      bodySmall:TextStyle(
+      bodySmall: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.normal,
         color: whiteColor,
       ),
     ),
     scaffoldBackgroundColor: backgroundColorDark,
-    bottomNavigationBarTheme:
-    BottomNavigationBarThemeData(selectedItemColor: primaryColor,backgroundColor: Colors.transparent,elevation: 0,unselectedItemColor: whiteColor),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    bottomNavigationBarTheme:const BottomNavigationBarThemeData(
+        selectedItemColor: primaryColor,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        unselectedItemColor: whiteColor),
+    floatingActionButtonTheme:const FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
       shape: StadiumBorder(
         side: BorderSide(
-          color:blackColor,
+          color: blackColor,
           width: 4,
         ),
       ),
