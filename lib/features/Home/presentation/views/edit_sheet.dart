@@ -9,32 +9,31 @@ import 'package:todo_app/core/show_date_picker.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 
-class ModalSheet extends StatefulWidget {
-  const ModalSheet({super.key});
+class EditSheet extends StatefulWidget {
+   EditSheet({super.key,required this.task});
+   Task task;
 
   @override
-  State<ModalSheet> createState() => _ModalSheetState();
+  State<EditSheet> createState() => _ModalSheetState();
 }
 
-class _ModalSheetState extends State<ModalSheet> {
+class _ModalSheetState extends State<EditSheet> {
   final _formKey = GlobalKey<FormState>();
   var format = DateFormat.yMd();
-  var selectedDate = DateTime.now();
-  String taskName = '';
-  String taskDescription = '';
 
   @override
   Widget build(BuildContext context) {
-    var taskProvider = Provider.of<TaskProvider>(context);
-    var configProvider = Provider.of<AppConfigProvider>(context);
+    final taskProvider = Provider.of<TaskProvider>(context);
+    final configProvider = Provider.of<AppConfigProvider>(context);
+    TextEditingController nameController= TextEditingController(text: widget.task.taskName);
+    TextEditingController descriptionController= TextEditingController(text: widget.task.taskDescription);
+    var selectedDate = widget.task.taskDate;
     void validateForm() {
       bool validate = _formKey.currentState!.validate();
       if (validate) {
         _formKey.currentState!.save();
-        Task task=Task(taskDate: selectedDate, taskName: taskName, taskDescription: taskDescription);
-        FirebaseUtils.addTaskToFirestore(task).timeout(Duration(milliseconds: 500),onTimeout: () {
-
-        },);
+         widget.task=Task(taskDate: selectedDate, taskName: nameController.text, taskDescription: descriptionController.text,id: widget.task.id);
+       taskProvider.updateTask(widget.task);
         //taskProvider.tasks.add(Task(
          //   taskDate: selectedDate,
          //   taskName: taskName,
@@ -52,15 +51,16 @@ class _ModalSheetState extends State<ModalSheet> {
         key: _formKey,
         child: Column(
           children: [
-            const Text('Add a New Task'),
+            const Text('Edit your Task'),
             TextFormField(
-              onSaved: (newValue) => taskName = newValue!,
+              controller: nameController,
+              onSaved: (value) => nameController.text=value!,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
                   .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                  hintText: 'Enter Your Task',
+                  hintText: 'Edit your Task  Name',
                   hintStyle: Theme.of(context).textTheme.bodyMedium),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -69,13 +69,14 @@ class _ModalSheetState extends State<ModalSheet> {
               },
             ),
             TextFormField(
-              onSaved: (newValue) => taskDescription = newValue!,
+              controller: descriptionController,
+              onSaved: (value) => descriptionController.text=value!,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
                   .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                  hintText: 'Enter Your description',
+                  hintText: 'Edit Your description',
                   hintStyle: Theme.of(context).textTheme.bodyMedium),
               maxLines: 4,
               validator: (value) {
@@ -90,7 +91,7 @@ class _ModalSheetState extends State<ModalSheet> {
            const  Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Select Time',
+                  'Edit Time',
                 )),
             TextButton(
               style: TextButton.styleFrom(
@@ -99,10 +100,11 @@ class _ModalSheetState extends State<ModalSheet> {
                       : MyTheme.whiteColor),
               onPressed: () async {
                 selectedDate = await selectDate(context);
+                widget.task.taskDate=selectedDate;
                 setState(() {});
               },
               child: Text(
-                format.format(selectedDate).toString(),
+                format.format(selectedDate!).toString(),
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -113,18 +115,17 @@ class _ModalSheetState extends State<ModalSheet> {
               onPressed: () {
                 validateForm();
                 taskProvider.getAllTasks();
-
                 Navigator.of(context).pop();
                 showDialog<void>(
                   context: context,
                   barrierDismissible: false, // user must tap button!
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Task Added Successfully'),
+                      title: const Text('Task edited Successfully'),
                       content:  SingleChildScrollView(
                         child: ListBody(
                           children: <Widget>[
-                            Text('${taskName.toString()} is Added to Tasks'),
+                            Text('${nameController.text} is edited'),
 
                           ],
                         ),

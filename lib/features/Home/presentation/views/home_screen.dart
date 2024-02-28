@@ -4,6 +4,7 @@ import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_modal_sheet.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
+import 'package:todo_app/features/Home/presentation/views/modal_sheet.dart';
 import 'package:todo_app/features/Home/presentation/views/todo_tab.dart';
 import 'package:todo_app/features/settings/presentaion/views/settings_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,9 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await showModalSheet(context).then((value) {
+              await showModalSheet(context,ModalSheet()).then((value) {
                 // if(taskProvider.date.day==DateTime.now().day&&taskProvider.calendarDate.day==DateTime.now().day){
-                taskProvider.filteringTasks(taskProvider.calendarDate);
+
 
                 //}
                 setState(() {});
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BottomNavigationBar(
               onTap: (value) {
                 selectedItem = value;
-                taskProvider.filteringTasks(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day));
+                taskProvider.getAllTasks();
                 setState(() {});
               },
               currentIndex: selectedItem,
@@ -83,4 +84,5 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: tabs[selectedItem]);
   }
+ 
 }

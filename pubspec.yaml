@@ -43,6 +43,11 @@ dependencies:
 
   flutter_slidable: ^3.0.1
   easy_date_timeline: 1.0.3
+  firebase_core: ^2.25.4
+  cloud_firestore: ^4.15.5
+
+
+
 
 dev_dependencies:
   flutter_test:
