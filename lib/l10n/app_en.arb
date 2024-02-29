@@ -19,5 +19,13 @@
  "task_edited_successfully":"Task Edited Successfully",
  "is_edited": "is edited",
  "ok":"OK !",
- "no_tasks":"No Tasks"
+ "no_tasks":"No Tasks",
+ "login":"Login",
+ "create_an_account":"Create an Account",
+ "register": "Register",
+ "already_have_an_account": "Already have an account?",
+ "email":"Email",
+ "password":"Password",
+ "username":"Username",
+ "confirm_password":"Confirm Password"
 }

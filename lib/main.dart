@@ -22,7 +22,7 @@ void main()async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
-      create: (context) => AppConfigProvider(),
+      create: (context) => AppConfigProvider()..getLang()..getTheme(),
     ),
     ChangeNotifierProvider(
       create: (context) => TaskProvider(),

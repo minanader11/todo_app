@@ -19,5 +19,13 @@
  "task_edited_successfully":"تم تعديل المهمة",
   "is_edited": "تم تعديل",
   "ok":"حسنا!",
-   "no_tasks":"لا يوجد  مهام"
+   "no_tasks":"لا يوجد  مهام",
+    "login":"تسجيل دخول",
+    "create_an_account":"انشاء حساب",
+    "register": "تسجيل",
+    "already_have_an_account": "هل لديك حساب؟",
+    "email":"بريد إلكتروني",
+     "password":"كلمة السر",
+     "username":"اسم المستخدم",
+     "confirm_password":"تأكيد كلمة السر"
 }

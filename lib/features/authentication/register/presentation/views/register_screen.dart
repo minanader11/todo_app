@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/core/custom_text_field.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/features/authentication/login/presentation/views/login_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = 'RegisterScreen';
@@ -35,7 +36,7 @@ class RegisterScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: Text(
-              'Register',
+              AppLocalizations.of(context)!.register,
               style:
                   Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 26),
             ),
@@ -54,7 +55,7 @@ class RegisterScreen extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.25,
                     ),
                     CustomTextField(
-                      label: 'Username',
+                      label:  AppLocalizations.of(context)!.username,
                       controller: userName,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
@@ -64,7 +65,7 @@ class RegisterScreen extends StatelessWidget {
                       },
                     ),
                     CustomTextField(
-                      label: 'Email',
+                      label:  AppLocalizations.of(context)!.email,
                       controller: email,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
@@ -81,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     CustomTextField(
                       obscureText: true,
-                      label: 'Password',
+                      label: AppLocalizations.of(context)!.password,
                       controller: password,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
@@ -95,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     CustomTextField(
                       obscureText: true,
-                      label: 'Confirm Password',
+                      label:  AppLocalizations.of(context)!.confirm_password,
                       controller: confirmPassword,
                       validator: (text) {
                         if (text == null || text.trim().isEmpty) {
@@ -123,7 +124,7 @@ class RegisterScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Create an Account',
+                                  AppLocalizations.of(context)!.create_an_account,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -142,7 +143,7 @@ class RegisterScreen extends StatelessWidget {
                         Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
                       },
                       child: Text(
-                        'Already have an account?',
+                        AppLocalizations.of(context)!.already_have_an_account,
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!

@@ -3,6 +3,7 @@ import 'package:todo_app/core/custom_text_field.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/features/Home/presentation/views/home_screen.dart';
 import 'package:todo_app/features/authentication/register/presentation/views/register_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = 'LoginScreen';
@@ -10,15 +11,17 @@ class LoginScreen extends StatelessWidget {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  var formKey= GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     void register() {
-      bool validate= formKey.currentState!.validate();
-      if(validate){
+      bool validate = formKey.currentState!.validate();
+      if (validate) {
         Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       }
     }
+
     return Stack(
       children: [
         Container(
@@ -35,9 +38,9 @@ class LoginScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: Text(
-              'Login',
+              AppLocalizations.of(context)!.login,
               style:
-              Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 26),
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 26),
             ),
             centerTitle: true,
           ),
@@ -53,16 +56,15 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.25,
                         ),
-
                         CustomTextField(
-                          label: 'Email',
+                          label:  AppLocalizations.of(context)!.email,
                           controller: email,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
                               return 'Please Enter Your Email';
                             }
                             bool emailValid = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(text);
                             if (!emailValid) {
                               return 'Please enter Vaild Email';
@@ -72,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         CustomTextField(
                           obscureText: true,
-                          label: 'Password',
+                          label:  AppLocalizations.of(context)!.password,
                           controller: password,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
@@ -84,7 +86,6 @@ class LoginScreen extends StatelessWidget {
                             return null;
                           },
                         ),
-
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: ElevatedButton(
@@ -94,15 +95,15 @@ class LoginScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10))),
                               onPressed: () {
                                 register();
-
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Login',
+                                      AppLocalizations.of(context)!.login,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge!
@@ -118,10 +119,11 @@ class LoginScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacementNamed(RegisterScreen.routeName);
+                            Navigator.of(context)
+                                .pushReplacementNamed(RegisterScreen.routeName);
                           },
                           child: Text(
-                            'Create an Account',
+                            AppLocalizations.of(context)!.create_an_account,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -137,6 +139,4 @@ class LoginScreen extends StatelessWidget {
       ],
     );
   }
-
-
 }
