@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/core/shared_prefrences.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -28,99 +29,110 @@ class _SettingsTabState extends State<SettingsTab> {
     String selectedTheme = configProvider.themeMode == ThemeMode.light
         ? AppLocalizations.of(context)!.light
         : AppLocalizations.of(context)!.dark;
-    String selectedLanguage = configProvider.language=='en'
+    String selectedLanguage = configProvider.language == 'en'
         ? AppLocalizations.of(context)!.english
         : AppLocalizations.of(context)!.arabic;
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(AppLocalizations.of(context)!.language),
-          SizedBox(
-            height: 23,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            AppLocalizations.of(context)!.app_title,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(color: MyTheme.primaryColor),
-                color: configProvider.themeMode == ThemeMode.light
-                    ? MyTheme.whiteColor
-                    : MyTheme.blackColor),
-            child: DropdownButton(
-              dropdownColor: configProvider.themeMode == ThemeMode.light
-                  ? MyTheme.whiteColor
-                  : MyTheme.blackColor,
-              underline: SizedBox(),
-              isExpanded: true,
-              value: selectedLanguage,
-              items: dropdownLanguage.map((String item) {
-                return DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                selectedLanguage = value!;
-                if(selectedLanguage==AppLocalizations.of(context)!.english){
-                  configProvider.changeLanguage('en');
-                }else{
-                  configProvider.changeLanguage('ar');
-                }
-                setState(() {});
-              },
-              style: configProvider.themeMode == ThemeMode.light
-                  ? Theme.of(context).textTheme.bodyMedium
-                  : Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: MyTheme.primaryColor),
-              itemHeight: 50,
-            ),
+          toolbarHeight: MediaQuery.of(context).size.height * 0.15,
+        ),
+
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(AppLocalizations.of(context)!.language),
+              SizedBox(
+                height: 23,
+              ),
+              Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: MyTheme.primaryColor),
+                    color: configProvider.themeMode == ThemeMode.light
+                        ? MyTheme.whiteColor
+                        : MyTheme.blackColor),
+                child: DropdownButton(
+                  dropdownColor: configProvider.themeMode == ThemeMode.light
+                      ? MyTheme.whiteColor
+                      : MyTheme.blackColor,
+                  underline: SizedBox(),
+                  isExpanded: true,
+                  value: selectedLanguage,
+                  items: dropdownLanguage.map((String item) {
+                    return DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    selectedLanguage = value!;
+                    if (selectedLanguage ==
+                        AppLocalizations.of(context)!.english) {
+                      configProvider.changeLanguage('en');
+
+                    } else {
+                      configProvider.changeLanguage('ar');
+                    }
+                    setState(() {});
+                  },
+                  style: configProvider.themeMode == ThemeMode.light
+                      ? Theme.of(context).textTheme.bodyMedium
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: MyTheme.primaryColor),
+                  itemHeight: 50,
+                ),
+              ),
+              SizedBox(
+                height: 23,
+              ),
+              Text(AppLocalizations.of(context)!.theme),
+              SizedBox(
+                height: 23,
+              ),
+              Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: MyTheme.primaryColor),
+                    color: configProvider.themeMode == ThemeMode.light
+                        ? MyTheme.whiteColor
+                        : MyTheme.blackColor),
+                child: DropdownButton(
+                  dropdownColor: configProvider.themeMode == ThemeMode.light
+                      ? MyTheme.whiteColor
+                      : MyTheme.blackColor,
+                  underline: SizedBox(),
+                  isExpanded: true,
+                  value: selectedTheme,
+                  items: dropdownThemes.map((String item) {
+                    return DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    selectedTheme = value!;
+                    configProvider.changeTheme(selectedTheme);
+                    setState(() {});
+                  },
+                  style: configProvider.themeMode == ThemeMode.light
+                      ? Theme.of(context).textTheme.bodyMedium
+                      : Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: MyTheme.primaryColor),
+                  itemHeight: 50,
+                ),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 23,
-          ),
-          Text(AppLocalizations.of(context)!.theme),
-          SizedBox(
-            height: 23,
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                border: Border.all(color: MyTheme.primaryColor),
-                color: configProvider.themeMode == ThemeMode.light
-                    ? MyTheme.whiteColor
-                    : MyTheme.blackColor),
-            child: DropdownButton(
-              dropdownColor: configProvider.themeMode == ThemeMode.light
-                  ? MyTheme.whiteColor
-                  : MyTheme.blackColor,
-              underline: SizedBox(),
-              isExpanded: true,
-              value: selectedTheme,
-              items: dropdownThemes.map((String item) {
-                return DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                selectedTheme = value!;
-                configProvider.changeTheme(selectedTheme);
-                setState(() {});
-              },
-              style: configProvider.themeMode == ThemeMode.light
-                  ? Theme.of(context).textTheme.bodyMedium
-                  : Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: MyTheme.primaryColor),
-              itemHeight: 50,
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:todo_app/features/Home/presentation/views/home_screen.dart';
+import 'package:todo_app/features/authentication/login/presentation/views/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
  static const routeName='splash_Screen';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
         );
       },
     );

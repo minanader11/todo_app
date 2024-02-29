@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
@@ -8,6 +7,7 @@ import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_date_picker.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModalSheet extends StatefulWidget {
   const ModalSheet({super.key});
@@ -31,15 +31,19 @@ class _ModalSheetState extends State<ModalSheet> {
       bool validate = _formKey.currentState!.validate();
       if (validate) {
         _formKey.currentState!.save();
-        Task task=Task(taskDate: selectedDate, taskName: taskName, taskDescription: taskDescription);
-        FirebaseUtils.addTaskToFirestore(task).timeout(Duration(milliseconds: 500),onTimeout: () {
-
-        },);
+        Task task = Task(
+            taskDate: selectedDate,
+            taskName: taskName,
+            taskDescription: taskDescription);
+        FirebaseUtils.addTaskToFirestore(task).timeout(
+          Duration(milliseconds: 500),
+          onTimeout: () {},
+        );
         //taskProvider.tasks.add(Task(
-         //   taskDate: selectedDate,
-         //   taskName: taskName,
-         //   taskDescription: taskDescription));
-     //   taskProvider.date = selectedDate;
+        //   taskDate: selectedDate,
+        //   taskName: taskName,
+        //   taskDescription: taskDescription));
+        //   taskProvider.date = selectedDate;
       }
     }
 
@@ -51,8 +55,11 @@ class _ModalSheetState extends State<ModalSheet> {
       child: Form(
         key: _formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Add a New Task'),
+            Align(
+                alignment: Alignment.center,
+                child: Text(AppLocalizations.of(context)!.add_a_new_task)),
             TextFormField(
               onSaved: (newValue) => taskName = newValue!,
               style: Theme.of(context)
@@ -60,7 +67,7 @@ class _ModalSheetState extends State<ModalSheet> {
                   .bodyMedium!
                   .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                  hintText: 'Enter Your Task',
+                  hintText: AppLocalizations.of(context)!.enter_your_task,
                   hintStyle: Theme.of(context).textTheme.bodyMedium),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -75,7 +82,8 @@ class _ModalSheetState extends State<ModalSheet> {
                   .bodyMedium!
                   .copyWith(fontWeight: FontWeight.normal),
               decoration: InputDecoration(
-                  hintText: 'Enter Your description',
+                  hintText:
+                      AppLocalizations.of(context)!.enter_your_description,
                   hintStyle: Theme.of(context).textTheme.bodyMedium),
               maxLines: 4,
               validator: (value) {
@@ -87,68 +95,84 @@ class _ModalSheetState extends State<ModalSheet> {
             const SizedBox(
               height: 10,
             ),
-           const  Align(
-                alignment: Alignment.centerLeft,
+            Text(
+              AppLocalizations.of(context)!.select_time,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                    primary: configProvider.themeMode == ThemeMode.light
+                        ? MyTheme.dateColor
+                        : MyTheme.whiteColor),
+                onPressed: () async {
+                  selectedDate = await selectDate(context);
+                  setState(() {});
+                },
                 child: Text(
-                  'Select Time',
-                )),
-            TextButton(
-              style: TextButton.styleFrom(
-                  primary: configProvider.themeMode == ThemeMode.light
-                      ? MyTheme.dateColor
-                      : MyTheme.whiteColor),
-              onPressed: () async {
-                selectedDate = await selectDate(context);
-                setState(() {});
-              },
-              child: Text(
-                format.format(selectedDate).toString(),
-                style: TextStyle(fontSize: 18),
+                  format.format(selectedDate).toString(),
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            IconButton(
-              onPressed: () {
-                validateForm();
-                taskProvider.getAllTasks();
+            Align(
+              alignment: Alignment.center,
+              child: IconButton(
+                onPressed: () {
+                  validateForm();
+                  taskProvider.getAllTasks();
 
-                Navigator.of(context).pop();
-                showDialog<void>(
-                  context: context,
-                  barrierDismissible: false, // user must tap button!
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Task Added Successfully'),
-                      content:  SingleChildScrollView(
-                        child: ListBody(
-                          children: <Widget>[
-                            Text('${taskName.toString()} is Added to Tasks'),
-
-                          ],
+                  Navigator.of(context).pop();
+                  showDialog<void>(
+                    context: context,
+                    barrierDismissible: false, // user must tap button!
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: MyTheme.primaryColor,
+                        title: Text(
+                          AppLocalizations.of(context)!.task_added_successfully,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(color: MyTheme.blackColor),
                         ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('Ok!'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              Text(
+                                  '${taskName.toString()} ${AppLocalizations.of(context)!.is_added}'),
+                            ],
+                          ),
                         ),
-                      ],
-                    );
-                  },
-                );
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text(AppLocalizations.of(context)!.ok, style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: MyTheme.greenColor),),
+                            onPressed: () {
+                              taskProvider.getAllTasks();
+                              Navigator.of(context).pop();
 
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen(),));
-              },
-              icon: const Icon(
-                Icons.check,
-                color: MyTheme.whiteColor,
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen(),));
+                },
+                icon: const Icon(
+                  Icons.check,
+                  color: MyTheme.whiteColor,
+                ),
+                style: IconButton.styleFrom(
+                    backgroundColor: MyTheme.primaryColor, iconSize: 30),
               ),
-              style: IconButton.styleFrom(
-                  backgroundColor: MyTheme.primaryColor, iconSize: 30),
             )
           ],
         ),

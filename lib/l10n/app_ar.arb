@@ -6,5 +6,18 @@
  "arabic" : "العربية",
  "light" : "مضئ",
  "dark":"ليلي",
-  "done":"تم"
+ "done":"تم",
+ "edit_your_task":"تعديل المهمة",
+ "no_tasks" : "لا يوجد مهام",
+ "edit_time" :"عدل الوقت",
+ "add_a_new_task": "اضف مهمة",
+ "select_time": "اختار الوقت",
+ "enter_your_task": "اسم المهمة",
+ "enter_your_description": "تعريف المهمة",
+  "task_added_successfully":"تم اضافة المهمة",
+  "is_added": "تم اضافتها للمهام",
+ "task_edited_successfully":"تم تعديل المهمة",
+  "is_edited": "تم تعديل",
+  "ok":"حسنا!",
+   "no_tasks":"لا يوجد  مهام"
 }

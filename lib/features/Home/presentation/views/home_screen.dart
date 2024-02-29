@@ -27,23 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> tabs = [
       TodoTab(),
       SettingsTab(),
-
     ];
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            AppLocalizations.of(context)!.app_title,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          toolbarHeight: MediaQuery.of(context).size.height * 0.15,
-        ),
+
         floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await showModalSheet(context,ModalSheet()).then((value) {
-                // if(taskProvider.date.day==DateTime.now().day&&taskProvider.calendarDate.day==DateTime.now().day){
-
-
-                //}
+              await showModalSheet(context, ModalSheet()).then((value) {
                 setState(() {});
               });
             },
@@ -84,5 +73,4 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: tabs[selectedItem]);
   }
- 
 }

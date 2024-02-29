@@ -6,5 +6,18 @@
  "arabic" : "Arabic",
  "light" : "Light",
  "dark":"Dark",
- "done":"Done"
+ "done":"Done",
+ "edit_your_task":"Edit Your Task",
+ "no_tasks" : "No tasks",
+ "edit_time" :"Edit Time",
+ "add_a_new_task": "Add a New Task",
+ "select_time": "Select Time",
+ "enter_your_task": "Enter Your Task",
+ "enter_your_description": "Enter Your Description",
+ "task_added_successfully":"Task Added Successfully",
+ "is_added": "is added to tasks",
+ "task_edited_successfully":"Task Edited Successfully",
+ "is_edited": "is edited",
+ "ok":"OK !",
+ "no_tasks":"No Tasks"
 }

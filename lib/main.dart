@@ -5,6 +5,8 @@ import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:todo_app/features/Home/presentation/views/home_screen.dart';
+import 'package:todo_app/features/authentication/login/presentation/views/login_screen.dart';
+import 'package:todo_app/features/authentication/register/presentation/views/register_screen.dart';
 import 'package:todo_app/features/splash_screen/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +40,9 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
-        HomeScreen.routeName: (context) => HomeScreen()
+        HomeScreen.routeName: (context) => HomeScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        LoginScreen.routeName:(context) => LoginScreen()
       },
       themeMode: configProvider.themeMode,
       theme: MyTheme.lightMode,

@@ -11,7 +11,6 @@ class TaskProvider extends ChangeNotifier{
   changeDate(DateTime newDate){
     date = newDate;
     getAllTasks();
-
   }
   addTask(Task task){
     FirebaseUtils.addTaskToFirestore(task);
@@ -29,8 +28,6 @@ class TaskProvider extends ChangeNotifier{
 
       return task1.taskDate!.compareTo(task2.taskDate!);
     });
-
-
    notifyListeners();
   }
 updateTask(Task task)async{
@@ -38,7 +35,8 @@ updateTask(Task task)async{
       'taskDescriptions': task.taskDescription,
       'taskDate': task.taskDate?.millisecondsSinceEpoch,
       'taskStatus': task.taskStatus,});
-    notifyListeners();
+    getAllTasks();
+
 }
   deleteTask(Task task) {
     FirebaseUtils.getTasksCollection().doc(task.id).delete();
