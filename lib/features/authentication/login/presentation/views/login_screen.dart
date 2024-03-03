@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/custom_text_field.dart';
+import 'package:todo_app/core/dialog_utils.dart';
+import 'package:todo_app/core/firebaseUtils.dart';
 import 'package:todo_app/core/myTheme.dart';
+import 'package:todo_app/features/Home/data/user_model.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/views/home_screen.dart';
 import 'package:todo_app/features/authentication/register/presentation/views/register_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,10 +21,49 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void register() {
+    void register() async {
       bool validate = formKey.currentState!.validate();
       if (validate) {
-        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        DialogUtils.showLoading(context: context, isDismissible: false);
+        try {
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: email.text, password: password.text);
+          var authProvider = Provider.of<AuthProviders>(context, listen: false);
+          var user = await FirebaseUtils.readUserFromFirestore(
+              credential.user?.uid ?? '');
+          authProvider.updateUser(user!);
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(
+              context: context,
+              message: 'Login Successfully',
+              actionName: 'Ok',
+              posActionFun: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(HomeScreen.routeName);
+              });
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'invalid-credential') {
+            DialogUtils.hideLoading(context);
+            DialogUtils.showMessage(
+                context: context,
+                message: 'the supplied auth credential is incorrect,malformed or has expired',
+                actionName: 'ok',
+                posActionFun: () {
+                  Navigator.of(context).pop();
+                });
+            print('No user found for that email.');
+          }
+        }catch (e){
+          DialogUtils.hideLoading(context);
+          DialogUtils.showMessage(
+              context: context,
+              message: e.toString(),
+              actionName: 'ok',
+              posActionFun: () {
+                Navigator.of(context).pop();
+              });
+        }
       }
     }
 
@@ -52,12 +97,17 @@ class LoginScreen extends StatelessWidget {
                     key: formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+
                       children: [
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.25,
                         ),
+                        Align(alignment: Alignment.topLeft,child: Padding(
+                          padding:  EdgeInsets.all(10.0),
+                          child: Text('Welcome Back!',style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.blackColor),),
+                        )),
                         CustomTextField(
-                          label:  AppLocalizations.of(context)!.email,
+                          label: AppLocalizations.of(context)!.email,
                           controller: email,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
@@ -67,14 +117,14 @@ class LoginScreen extends StatelessWidget {
                                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(text);
                             if (!emailValid) {
-                              return 'Please enter Vaild Email';
+                              return 'Please enter Valid Email';
                             }
                             return null;
                           },
                         ),
                         CustomTextField(
                           obscureText: true,
-                          label:  AppLocalizations.of(context)!.password,
+                          label: AppLocalizations.of(context)!.password,
                           controller: password,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {

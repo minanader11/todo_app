@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:todo_app/features/Home/presentation/views/home_screen.dart';
 import 'package:todo_app/features/authentication/login/presentation/views/login_screen.dart';
@@ -16,11 +17,10 @@ void main()async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseFirestore.instance.disableNetwork();
-  FirebaseFirestore.instance.settings =
-      Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+
 
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => AuthProviders(),),
     ChangeNotifierProvider(
       create: (context) => AppConfigProvider()..getLang()..getTheme(),
     ),

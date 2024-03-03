@@ -8,15 +8,15 @@ class TaskProvider extends ChangeNotifier{
   List<Task> filteredTasks=[];
   DateTime date=DateTime.now();
   DateTime calendarDate= DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  changeDate(DateTime newDate){
+  changeDate(DateTime newDate,String id){
     date = newDate;
-    getAllTasks();
+    getAllTasks(id);
   }
-  addTask(Task task){
-    FirebaseUtils.addTaskToFirestore(task);
+  addTask(Task task,String id){
+    FirebaseUtils.addTaskToFirestore(task,id);
   }
-  getAllTasks()async{
-    QuerySnapshot<Task> querySnapshots= await FirebaseUtils.getTasksCollection().get();
+  getAllTasks(String id)async{
+    QuerySnapshot<Task> querySnapshots= await FirebaseUtils.getTasksCollection(id).get();
    tasks = querySnapshots.docs.map((doc) => doc.data()).toList();
    tasks = tasks.where((task) {
      if(date.day==task.taskDate!.day && date.month==task.taskDate!.month && date.year==task.taskDate!.year){
@@ -30,16 +30,16 @@ class TaskProvider extends ChangeNotifier{
     });
    notifyListeners();
   }
-updateTask(Task task)async{
-    await FirebaseUtils.getTasksCollection().doc(task.id).update({ 'taskName': task.taskName,
+updateTask(Task task,String id)async{
+    await FirebaseUtils.getTasksCollection(id).doc(task.id).update({ 'taskName': task.taskName,
       'taskDescriptions': task.taskDescription,
       'taskDate': task.taskDate?.millisecondsSinceEpoch,
       'taskStatus': task.taskStatus,});
-    getAllTasks();
+    getAllTasks(id);
 
 }
-  deleteTask(Task task) {
-    FirebaseUtils.getTasksCollection().doc(task.id).delete();
+  deleteTask(Task task,String id) {
+    FirebaseUtils.getTasksCollection(id).doc(task.id).delete();
     //getAllTasks();
     notifyListeners();
   }

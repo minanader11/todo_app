@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/core/shared_prefrences.dart';
 
 class SettingsTab extends StatefulWidget {
   const SettingsTab({super.key});
@@ -47,11 +46,11 @@ class _SettingsTabState extends State<SettingsTab> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(AppLocalizations.of(context)!.language),
-              SizedBox(
+              const SizedBox(
                 height: 23,
               ),
               Container(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     border: Border.all(color: MyTheme.primaryColor),
                     color: configProvider.themeMode == ThemeMode.light
@@ -61,7 +60,7 @@ class _SettingsTabState extends State<SettingsTab> {
                   dropdownColor: configProvider.themeMode == ThemeMode.light
                       ? MyTheme.whiteColor
                       : MyTheme.blackColor,
-                  underline: SizedBox(),
+                  underline: const SizedBox(),
                   isExpanded: true,
                   value: selectedLanguage,
                   items: dropdownLanguage.map((String item) {
@@ -90,15 +89,15 @@ class _SettingsTabState extends State<SettingsTab> {
                   itemHeight: 50,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 23,
               ),
               Text(AppLocalizations.of(context)!.theme),
-              SizedBox(
+              const SizedBox(
                 height: 23,
               ),
               Container(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     border: Border.all(color: MyTheme.primaryColor),
                     color: configProvider.themeMode == ThemeMode.light
@@ -108,7 +107,7 @@ class _SettingsTabState extends State<SettingsTab> {
                   dropdownColor: configProvider.themeMode == ThemeMode.light
                       ? MyTheme.whiteColor
                       : MyTheme.blackColor,
-                  underline: SizedBox(),
+                  underline: const SizedBox(),
                   isExpanded: true,
                   value: selectedTheme,
                   items: dropdownThemes.map((String item) {

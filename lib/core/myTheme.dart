@@ -13,7 +13,7 @@ class MyTheme {
   static const backgroundColorDark = Color(0xff060E1E);
   static const dateColor = Color(0xff707070);
   static ThemeData lightMode = ThemeData(
-    appBarTheme:const AppBarTheme(
+    appBarTheme:const AppBarTheme(actionsIconTheme: IconThemeData(color: whiteColor),
       backgroundColor: primaryColor,
       elevation: 0,
     ),

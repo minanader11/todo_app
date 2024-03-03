@@ -5,6 +5,7 @@ import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_date_picker.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,6 +31,8 @@ class _EditSheetState extends State<EditSheet> {
     TextEditingController descriptionController =
         TextEditingController(text: widget.task.taskDescription);
     var selectedDate = widget.task.taskDate;
+    var authProvider=Provider.of<AuthProviders>(context);
+
     void validateForm() {
       bool validate = _formKey.currentState!.validate();
       if (validate) {
@@ -41,7 +44,7 @@ class _EditSheetState extends State<EditSheet> {
         // print(widget.task.taskName);
         //print(widget.task.taskDate);
         //print(taskProvider.date);
-        taskProvider.updateTask(widget.task);
+        taskProvider.updateTask(widget.task,authProvider.user!.id);
         //taskProvider.tasks.add(Task(
         //   taskDate: selectedDate,
         //   taskName: taskName,
@@ -112,7 +115,7 @@ class _EditSheetState extends State<EditSheet> {
               alignment: Alignment.center,
               child: TextButton(
                 style: TextButton.styleFrom(
-                    primary: configProvider.themeMode == ThemeMode.light
+                    foregroundColor: configProvider.themeMode == ThemeMode.light
                         ? MyTheme.dateColor
                         : MyTheme.whiteColor),
                 onPressed: () async {
@@ -123,7 +126,7 @@ class _EditSheetState extends State<EditSheet> {
                 },
                 child: Text(
                   format.format(selectedDate!).toString(),
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),
@@ -170,7 +173,7 @@ class _EditSheetState extends State<EditSheet> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              taskProvider.getAllTasks();
+                              taskProvider.getAllTasks(authProvider.user!.id);
                             },
                           ),
                         ],

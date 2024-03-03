@@ -6,6 +6,7 @@ import 'package:todo_app/core/firebaseUtils.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_date_picker.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,6 +28,8 @@ class _ModalSheetState extends State<ModalSheet> {
   Widget build(BuildContext context) {
     var taskProvider = Provider.of<TaskProvider>(context);
     var configProvider = Provider.of<AppConfigProvider>(context);
+
+    var authProvider=Provider.of<AuthProviders>(context);
     void validateForm() {
       bool validate = _formKey.currentState!.validate();
       if (validate) {
@@ -35,7 +38,7 @@ class _ModalSheetState extends State<ModalSheet> {
             taskDate: selectedDate,
             taskName: taskName,
             taskDescription: taskDescription);
-        FirebaseUtils.addTaskToFirestore(task).timeout(
+        FirebaseUtils.addTaskToFirestore(task,authProvider.user!.id).timeout(
           Duration(milliseconds: 500),
           onTimeout: () {},
         );
@@ -107,7 +110,9 @@ class _ModalSheetState extends State<ModalSheet> {
                         : MyTheme.whiteColor),
                 onPressed: () async {
                   selectedDate = await selectDate(context);
-                  setState(() {});
+                  setState(() {
+                    print(selectedDate);
+                  });
                 },
                 child: Text(
                   format.format(selectedDate).toString(),
@@ -123,7 +128,7 @@ class _ModalSheetState extends State<ModalSheet> {
               child: IconButton(
                 onPressed: () {
                   validateForm();
-                  taskProvider.getAllTasks();
+                  taskProvider.getAllTasks(authProvider.user!.id);
 
                   Navigator.of(context).pop();
                   showDialog<void>(
@@ -149,14 +154,16 @@ class _ModalSheetState extends State<ModalSheet> {
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: Text(AppLocalizations.of(context)!.ok, style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(color: MyTheme.greenColor),),
+                            child: Text(
+                              AppLocalizations.of(context)!.ok,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: MyTheme.greenColor),
+                            ),
                             onPressed: () {
-                              taskProvider.getAllTasks();
+                              taskProvider.getAllTasks(authProvider.user!.id);
                               Navigator.of(context).pop();
-
                             },
                           ),
                         ],

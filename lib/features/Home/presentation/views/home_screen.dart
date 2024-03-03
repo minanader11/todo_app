@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/core/app_config_provider.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_modal_sheet.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:todo_app/features/Home/presentation/views/modal_sheet.dart';
 import 'package:todo_app/features/Home/presentation/views/todo_tab.dart';
 import 'package:todo_app/features/settings/presentaion/views/settings_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = 'HomeScreen';
@@ -24,15 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var taskProvider = Provider.of<TaskProvider>(context);
     var configProvider = Provider.of<AppConfigProvider>(context);
-    List<Widget> tabs = [
+    var authProvider=Provider.of<AuthProviders>(context);
+
+    List<Widget> tabs = const [
       TodoTab(),
       SettingsTab(),
     ];
     return Scaffold(
-
         floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await showModalSheet(context, ModalSheet()).then((value) {
+              await showModalSheet(context,const  ModalSheet()).then((value) {
                 setState(() {});
               });
             },
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BottomNavigationBar(
               onTap: (value) {
                 selectedItem = value;
-                taskProvider.getAllTasks();
+                taskProvider.getAllTasks(authProvider.user!.id);
                 setState(() {});
               },
               currentIndex: selectedItem,

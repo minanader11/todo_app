@@ -8,6 +8,7 @@ import 'package:todo_app/core/firebaseUtils.dart';
 import 'package:todo_app/core/myTheme.dart';
 import 'package:todo_app/core/show_modal_sheet.dart';
 import 'package:todo_app/features/Home/data/task_model.dart';
+import 'package:todo_app/features/Home/presentation/manager/auth_provider.dart';
 import 'package:todo_app/features/Home/presentation/manager/task_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/features/Home/presentation/views/edit_sheet.dart';
@@ -22,6 +23,7 @@ class TaskListITem extends StatelessWidget {
     var format = DateFormat.yMd();
     var dateString = format.format(DateTime.now());
     var taskProvider=Provider.of<TaskProvider>(context);
+    var authProvider=Provider.of<AuthProviders>(context);
     return InkWell(
       onTap: ()async{
         return await showModalSheet(context, EditSheet(task: task,));
@@ -37,7 +39,7 @@ class TaskListITem extends StatelessWidget {
                 onPressed: (context){
                 taskProvider.filteredTasks.remove(task);
                 taskProvider.tasks.remove(task);
-                taskProvider.deleteTask(task);
+                taskProvider.deleteTask(task,authProvider.user!.id);
                 },
                 backgroundColor: MyTheme.redColor,
                 foregroundColor: MyTheme.whiteColor,
