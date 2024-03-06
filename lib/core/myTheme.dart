@@ -16,6 +16,7 @@ class MyTheme {
     appBarTheme:const AppBarTheme(actionsIconTheme: IconThemeData(color: whiteColor),
       backgroundColor: primaryColor,
       elevation: 0,
+
     ),
     textTheme:const TextTheme(
       bodyLarge: TextStyle(

@@ -7,7 +7,7 @@ class TaskProvider extends ChangeNotifier{
   List<Task> tasks=[];
   List<Task> filteredTasks=[];
   DateTime date=DateTime.now();
-  DateTime calendarDate= DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
   changeDate(DateTime newDate,String id){
     date = newDate;
     getAllTasks(id);

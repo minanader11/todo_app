@@ -50,6 +50,7 @@ class _TodoTabState extends State<TodoTab> {
                     IconButton(onPressed: (){
                       taskProvider.tasks=[];
                       authProvider.user= null;
+                      taskProvider.date=DateTime.now();
                       Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
                     }, icon: Icon(Icons.logout,color: Colors.white,))
                   ],
